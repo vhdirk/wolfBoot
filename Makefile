@@ -38,7 +38,7 @@ LDFLAGS:=
 SECURE_LDFLAGS:=
 LD_START_GROUP:=-Wl,--start-group
 LD_END_GROUP:=-Wl,--end-group
-LSCRIPT_IN?=hal/$(TARGET).ld
+LSCRIPT_IN:=hal/$(TARGET).ld
 L2SRAM_ADDR?=0xF8F00000
 V?=0
 DEBUG?=0
@@ -358,6 +358,10 @@ ifeq ($(USE_ARMCLANG),1)
   ifeq ($(TZEN),1)
     SECURE_LDFLAGS:=--import_cmse_lib_out=./src/wolfboot_tz_nsc.o
   endif
+endif
+
+ifneq ($(CUSTOM_LSCRIPT_IN),)
+  LSCRIPT_IN:=$(CUSTOM_LSCRIPT_IN)
 endif
 
 # Environment variables for sign tool
